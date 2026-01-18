@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Libertinus+Sans:ital,wght@0,400;0,700;1,400&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  background:#5a6fd6;
+  min-height: 100vh;
+  font-family: "Libertinus Sans", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* main container */
+.Home{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
+}
+
+.Home h1{
+  color: rgb(255, 255, 255);
+  margin-bottom: 25px;
+}
+
+/* create form */
+.Create_form{
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  gap: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.Create_form input{
+  width: 260px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ffffff;
+  outline: none;
+}
+
+.Create_form button{
+  padding: 10px 16px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.Create_form button:hover{
+  background: #5a6fd6;
+}
+
+/* todo card */
+.todo{
+  width: 420px;
+  background: #5b9ee0;
+  margin-top: 12px;
+  padding: 12px 15px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+}
+
+/* todo text */
+.todo p{
+  color: rgb(63, 73, 163);
+  font-size: 16px;
+  margin: 0;
+  word-break: break-word;
+}
+
+/* button */
+.todo button{
+  padding: 6px 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.todo button:first-child{
+  background: white;
+  color: black;
+}
+
+.todo button:last-child{
+  background: white;
+  color: black;
+}

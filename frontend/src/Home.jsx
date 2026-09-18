@@ -8,7 +8,7 @@ function Home({ listOfTask, setlistOfTask, editId, setEditId, setEditTask }) {
       return;
     }
 
-    axios.delete(`http://localhost:5000/delete/${id}`)
+    axios.delete(`https://mern-todolist-backend.vercel.app/delete/${id}`)
       .then(() => {
         setlistOfTask(prev => prev.filter(todo => todo._id !== id));
       });

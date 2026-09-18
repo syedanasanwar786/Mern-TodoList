@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 function Create({ setlistOfTask, editId, setEditId, editTask, setEditTask }) {
   const GetData = () => {
-    axios.get("http://localhost:5000/get")
+    axios.get("https://mern-todolist-backend.vercel.app/get")
       .then(res => setlistOfTask(res.data))
       .catch(err => console.log(err));
   };
@@ -17,7 +17,7 @@ function Create({ setlistOfTask, editId, setEditId, editTask, setEditTask }) {
 
     // update
     if (editId) {
-      axios.put(`http://localhost:5000/update/${editId}`, { task: editTask })
+      axios.put(`https://mern-todolist-backend.vercel.app/update/${editId}`, { task: editTask })
         .then(res => {
           setlistOfTask(prev =>
             prev.map(todo => (todo._id === editId ? res.data : todo))
@@ -28,7 +28,7 @@ function Create({ setlistOfTask, editId, setEditId, editTask, setEditTask }) {
     }
     // add
     else {
-      axios.post("http://localhost:5000/add", { task: editTask })
+      axios.post("https://mern-todolist-backend.vercel.app/add", { task: editTask })
         .then(() => {
           setEditTask("");
           GetData();

@@ -1,99 +1,197 @@
 @import url('https://fonts.googleapis.com/css2?family=Libertinus+Sans:ital,wght@0,400;0,700;1,400&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body{
-  background:#5a6fd6;
+body {
   min-height: 100vh;
-  font-family: "Libertinus Sans", sans-serif;
-  font-weight: 700;
-  font-style: italic;
+  background: linear-gradient(135deg, #5a6fd6, #667eea);
+  font-family: "Roboto", sans-serif;
 }
 
-/* main container */
-.Home{
+/* Main container */
+.Home {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 50px;
+  padding: 70px 20px 40px;
 }
 
-.Home h1{
-  color: rgb(255, 255, 255);
-  margin-bottom: 25px;
+/* Heading */
+.Home h1 {
+  color: white;
+  font-family: "Oswald", sans-serif;
+  font-size: 42px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 30px;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* create form */
-.Create_form{
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
+/* Create form */
+.Create_form {
+  width: 100%;
+  max-width: 520px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 18px;
+  border-radius: 16px;
   display: flex;
-  gap: 10px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  gap: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
 }
 
-.Create_form input{
-  width: 260px;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ffffff;
+.Create_form:focus-within {
+  transform: translateY(-3px);
+}
+
+/* Input */
+.Create_form input {
+  flex: 1;
+  min-width: 0;
+  padding: 13px 15px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background: #f3f5ff;
+  color: #333;
+  font-size: 15px;
   outline: none;
+  transition: border 0.3s ease, background 0.3s ease;
 }
 
-.Create_form button{
-  padding: 10px 16px;
-  background: #667eea;
+.Create_form input:focus {
+  border-color: #667eea;
+  background: white;
+}
+
+.Create_form input::placeholder {
+  color: #858585;
+}
+
+/* Add / Save button */
+.Create_form button {
+  padding: 12px 22px;
+  background: #5a6fd6;
   color: white;
   border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.Create_form button:hover{
-  background: #5a6fd6;
-}
-
-/* todo card */
-.todo{
-  width: 420px;
-  background: #5b9ee0;
-  margin-top: 12px;
-  padding: 12px 15px;
   border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.Create_form button:hover {
+  background: #4358bd;
+  transform: translateY(-2px);
+}
+
+.Create_form button:active {
+  transform: scale(0.96);
+}
+
+/* Todo list wrapper */
+.todo {
+  width: 100%;
+  max-width: 520px;
+  background: rgba(91, 158, 224, 0.95);
+  margin-top: 16px;
+  padding: 17px 18px;
+  border-radius: 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+  gap: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* todo text */
-.todo p{
-  color: rgb(63, 73, 163);
+.todo:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* Todo text */
+.todo p {
+  color: white !important;
   font-size: 16px;
-  margin: 0;
+  font-weight: 500;
+  line-height: 1.5;
   word-break: break-word;
 }
 
-/* button */
-.todo button{
-  padding: 6px 10px;
+/* Buttons container */
+.todo div {
+  display: flex;
+  gap: 8px !important;
+  flex-shrink: 0;
+}
+
+/* Todo buttons */
+.todo button {
+  padding: 8px 12px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
+  background: white;
+  color: #4358bd;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.todo button:first-child{
-  background: white;
-  color: black;
+.todo button:hover {
+  background: #e9edff;
+  transform: translateY(-2px);
 }
 
-.todo button:last-child{
-  background: white;
-  color: black;
+.todo button:active {
+  transform: scale(0.95);
+}
+
+/* Empty state */
+.Home h3 {
+  margin-top: 25px;
+  font-size: 18px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+/* Mobile responsive design */
+@media (max-width: 600px) {
+  .Home {
+    padding: 45px 15px 30px;
+  }
+
+  .Home h1 {
+    font-size: 34px;
+  }
+
+  .Create_form {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .Create_form button {
+    padding: 12px 16px;
+  }
+
+  .todo {
+    padding: 14px;
+    gap: 10px;
+  }
+
+  .todo p {
+    font-size: 14px;
+  }
+
+  .todo button {
+    padding: 7px 9px;
+    font-size: 12px;
+  }
 }

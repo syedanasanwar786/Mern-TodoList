@@ -4,11 +4,27 @@ import cors from "cors";
 import "dotenv/config";
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: "https://mern-todo-list-beta.vercel.app"
+}));
 app.use(express.json());
+
+// MongoDB Connection
+async function connectDB() {
+  if (mongoose.connection.readyState === 1) {
+    return;
+  }
+
+  if (!process.env.MONGODB_URI) {
+    throw new Error("MONGODB_URI is missing in .env file");
+  }
+
+  await mongoose.connect(process.env.MONGODB_URI);
+
+  console.log("MongoDB Atlas connected successfully");
+}
 
 // Todo Schema
 const todoSchema = new mongoose.Schema(
@@ -33,9 +49,29 @@ app.get("/", (req, res) => {
   });
 });
 
+// Get All Todos
+app.get("/get", async (req, res) => {
+  try {
+    await connectDB();
+
+    const todos = await Todo.find().sort({ createdAt: -1 });
+
+    res.status(200).json(todos);
+  } catch (error) {
+    console.error("Get todos error:", error.message);
+
+    res.status(500).json({
+      message: "Failed to fetch todos",
+      error: error.message,
+    });
+  }
+});
+
 // Create Todo
 app.post("/add", async (req, res) => {
   try {
+    await connectDB();
+
     const { task } = req.body;
 
     if (!task || !task.trim()) {
@@ -59,25 +95,11 @@ app.post("/add", async (req, res) => {
   }
 });
 
-// Get All Todos
-app.get("/get", async (req, res) => {
-  try {
-    const todos = await Todo.find().sort({ createdAt: -1 });
-
-    res.status(200).json(todos);
-  } catch (error) {
-    console.error("Get todos error:", error.message);
-
-    res.status(500).json({
-      message: "Failed to fetch todos",
-      error: error.message,
-    });
-  }
-});
-
 // Update Todo
 app.put("/update/:id", async (req, res) => {
   try {
+    await connectDB();
+
     const { task } = req.body;
 
     if (!task || !task.trim()) {
@@ -88,9 +110,7 @@ app.put("/update/:id", async (req, res) => {
 
     const updatedTodo = await Todo.findByIdAndUpdate(
       req.params.id,
-      {
-        task: task.trim(),
-      },
+      { task: task.trim() },
       {
         new: true,
         runValidators: true,
@@ -117,6 +137,8 @@ app.put("/update/:id", async (req, res) => {
 // Delete Todo
 app.delete("/delete/:id", async (req, res) => {
   try {
+    await connectDB();
+
     const deletedTodo = await Todo.findByIdAndDelete(req.params.id);
 
     if (!deletedTodo) {
@@ -138,17 +160,14 @@ app.delete("/delete/:id", async (req, res) => {
   }
 });
 
-// Connect MongoDB and Start Server
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log("MongoDB Atlas connected successfully");
+// Export app for Vercel
+export default app;
 
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  })
-  .catch((error) => {
-    console.error("MongoDB connection error:", error.message);
-    process.exit(1);
+// Local server
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 5000;
+
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
   });
+}

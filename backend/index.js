@@ -5,19 +5,19 @@ import "dotenv/config";
 
 const app = express();
 
+// Middleware
+app.use(
+  cors({
+    origin: [
+      "https://mern-todo-list-beta.vercel.app",
+      "http://localhost:5173",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
 
-app.use(cors({
-  origin: [
-    "https://mern-todo-list-beta.vercel.app",
-    "http://localhost:5173"
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type"],
-  credentials: false
-}));
-
-app.options("*", cors());
-
+app.use(express.json());
 
 // MongoDB Connection
 async function connectDB() {
@@ -26,7 +26,7 @@ async function connectDB() {
   }
 
   if (!process.env.MONGODB_URI) {
-    throw new Error("MONGODB_URI is missing in .env file");
+    throw new Error("MONGODB_URI is missing in environment variables");
   }
 
   await mongoose.connect(process.env.MONGODB_URI);
@@ -66,7 +66,7 @@ app.get("/get", async (req, res) => {
 
     res.status(200).json(todos);
   } catch (error) {
-    console.error("Get todos error:", error.message);
+    console.error("Get todos error:", error);
 
     res.status(500).json({
       message: "Failed to fetch todos",
@@ -94,7 +94,7 @@ app.post("/add", async (req, res) => {
 
     res.status(201).json(newTodo);
   } catch (error) {
-    console.error("Add todo error:", error.message);
+    console.error("Add todo error:", error);
 
     res.status(500).json({
       message: "Failed to add todo",
@@ -133,7 +133,7 @@ app.put("/update/:id", async (req, res) => {
 
     res.status(200).json(updatedTodo);
   } catch (error) {
-    console.error("Update todo error:", error.message);
+    console.error("Update todo error:", error);
 
     res.status(500).json({
       message: "Failed to update todo",
@@ -159,7 +159,7 @@ app.delete("/delete/:id", async (req, res) => {
       message: "Todo deleted successfully",
     });
   } catch (error) {
-    console.error("Delete todo error:", error.message);
+    console.error("Delete todo error:", error);
 
     res.status(500).json({
       message: "Failed to delete todo",

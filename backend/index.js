@@ -5,11 +5,19 @@ import "dotenv/config";
 
 const app = express();
 
-// Middleware
+
 app.use(cors({
-  origin: "https://mern-todo-list-beta.vercel.app"
+  origin: [
+    "https://mern-todo-list-beta.vercel.app",
+    "http://localhost:5173"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type"],
+  credentials: false
 }));
-app.use(express.json());
+
+app.options("*", cors());
+
 
 // MongoDB Connection
 async function connectDB() {
